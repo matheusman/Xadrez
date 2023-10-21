@@ -30,28 +30,24 @@ class Table {
     return (this.color = !this.color);
   }
 
+  private appendHtml (pair : string) : string {
+    return `<div class="square ${pair}"></div>`
+  }
+
   private checkPair(column: string, index: number, table: HTMLDivElement) {
     if (index % 2 === 0) {
       console.log(index);
       if (this.showPair()) {
-        table.innerHTML += `
-        <div class="square pair"></div>
-        `;
+        table.innerHTML += this.appendHtml("pair");
       } else {
-        table.innerHTML += `
-        <div class="square odd"></div>
-        `;
+        table.innerHTML += this.appendHtml("odd");
       }
     } else {
       this.color = !this.color;
       if (this.showPair()) {
-        table.innerHTML += `
-        <div class="square pair"></div>
-        `;
+        table.innerHTML += this.appendHtml("pair");
       } else {
-        table.innerHTML += `
-        <div class="square odd"></div>
-        `;
+        table.innerHTML += this.appendHtml("odd");
       }
       return this.showPair();
     }
