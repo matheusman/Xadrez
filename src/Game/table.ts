@@ -2,12 +2,13 @@ import { Pecas } from "../Pecas/PecasIterface";
 import Torre from "../Pecas/Torre";
 
 export default class Table {
-  row: number;
-  columns: number;
-  index: number;
-  matriz: string[][];
-  color: boolean;
-  table: null | HTMLDivElement;
+
+  private row: number;
+  private columns: number;
+  protected index: number;
+  protected matriz: string[][];
+  protected color: boolean;
+  public table: null | HTMLDivElement;
 
   public constructor(row: number, columns: number) {
     this.row = row;
@@ -64,13 +65,13 @@ export default class Table {
       if (!table || !(table instanceof HTMLDivElement))
         throw new Error("Div tabela não foi encontrada!");
       if (this.table === null) this.table = table;
-      this.matriz.forEach((row, indexRow) => {
+      this.matriz.forEach((columns, indexColumns) => {
         this.index++;
         table.innerHTML += `<div data-rows=${String.fromCharCode(
-          65 + indexRow
+          65 + indexColumns
         )} class="rows"></div>`;
-        row.forEach((column, indexColumn) => {
-          this.checkPair(indexColumn, String.fromCharCode(65 + indexRow));
+        columns.forEach((row, indexRow) => {
+          this.checkPair(indexRow, String.fromCharCode(65 + indexColumns));
         });
       });
       this.updatePage(new Torre("Branca", 4, "c"));
@@ -82,11 +83,17 @@ export default class Table {
   }
 
   protected updatePage(peca: Pecas) {
-    this.matriz.forEach((row, indexRow) => {
-      row.forEach((column, indexColumn) => {
-        const row = document.querySelector(`[data-row="${indexRow}"]`);
-        if (column !== "") {
-          
+    this.matriz.forEach((columns, indexColumns) => {
+      columns.forEach((rows, indexRows) => {
+        if (rows !== "") {
+          const column = document.querySelector(`[data-columns="${String.fromCharCode(indexColumns + 65)}"]`);
+          const row = document.querySelector(`data-rows="${indexRows}"`)
+          console.log(column)
+          console.log(row)
+          if (column instanceof HTMLDivElement && row instanceof HTMLDivElement) {
+            column.dataset.colum
+          }
+
         }
       });
     });

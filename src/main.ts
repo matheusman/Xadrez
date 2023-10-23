@@ -1,10 +1,13 @@
 import "./styles/styles.scss";
-import Xadrez from "./Game/table";
+import Xadrez from './Game/Xadrez'
 
 class Start {
+    chess : Xadrez;
     constructor () {
-        new Xadrez(8, 8);
+        this.chess = new Xadrez(8, 8);
     }
+
+
 }
 
 new Start();

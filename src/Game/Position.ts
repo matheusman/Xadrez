@@ -1,9 +1,9 @@
 export default class Position {
 
-    posInitial : number;
+    posInitial : string;
     posFinal : number;
 
-    constructor (posInitial : number, posFinal : number) {
+    constructor (posInitial : string, posFinal : number) {
         this.posInitial = posInitial;
         this.posFinal = posFinal;
     }
