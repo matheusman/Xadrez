@@ -6,13 +6,13 @@ export default class Torre implements Pecas {
   qteMoviment: number;
   sprite: string;
 
-  constructor(color: Colors, posInitial: number, posFinal: string) {
+  constructor(color: Colors) {
     this.color = color;
     this.qteMoviment = 0;
     this.sprite = "T";
   }
 
-  public static ToString() : string {
+  ToString() : string {
     return `<img src=${torre} alt="torre"/>`;
   }
 }

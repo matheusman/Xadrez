@@ -74,7 +74,6 @@ export default class Table {
           this.checkPair(indexRow, String.fromCharCode(65 + indexColumns));
         });
       });
-      this.updatePage(new Torre("Branca", 4, "c"));
     } catch (err) {
       if (err instanceof Error) {
         console.log(err.message);
@@ -82,7 +81,7 @@ export default class Table {
     }
   }
 
-  protected updatePage(peca: Pecas) {
+  protected updatePage () {
     this.matriz.forEach((columns, indexColumns) => {
       columns.forEach((rows, indexRows) => {
         if (rows !== "") {
@@ -93,7 +92,6 @@ export default class Table {
           if (column instanceof HTMLDivElement && row instanceof HTMLDivElement) {
             column.dataset.colum
           }
-
         }
       });
     });
