@@ -1,13 +1,10 @@
-import "./styles.scss";
-import Table from "./Game/table";
+import "./styles/styles.scss";
+import Xadrez from "./Game/table";
 
 class Start {
-    table : Table;
     constructor () {
-        this.table = new Table(8, 8);
+        new Xadrez(8, 8);
     }
-
-    
 }
 
 new Start();

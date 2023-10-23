@@ -1,5 +1,5 @@
 import { Pecas } from "../Pecas/PecasIterface";
-import Position from "./Position";
+import Torre from "../Pecas/Torre";
 
 export default class Table {
   row: number;
@@ -7,17 +7,19 @@ export default class Table {
   index: number;
   matriz: string[][];
   color: boolean;
-  table : null | HTMLDivElement;
+  table: null | HTMLDivElement;
 
   public constructor(row: number, columns: number) {
     this.row = row;
     this.columns = columns;
+
     this.matriz = [];
     this.index = 0;
     this.color = false;
     this.table = null;
+
+    this.createMatriz();
     this.showTable();
-    
   }
 
   private createMatriz() {
@@ -30,30 +32,29 @@ export default class Table {
     }
   }
 
-  private showPair(): boolean {
-    return (this.color = !this.color);
+  private appendHtml(numbers: number, pair: string): string {
+    return `<div data-columns=${numbers + 1} class="square ${pair}"></div>`;
   }
 
-  private appendHtml (pair : string) : string {
-    return `<div class="square ${pair}"></div>`
-  }
-
-  private checkPair(column: string, index: number, table: HTMLDivElement) {
-    if (index % 2 === 0) {
-      console.log(index);
-      if (this.showPair()) {
-        table.innerHTML += this.appendHtml("pair");
+  private checkPair(index: number, charCode: string) {
+    const row = document.querySelector(`[data-rows="${charCode}"]`);
+    if (row) {
+      if (this.index % 2 === 0) {
+        if (this.color) {
+          row.innerHTML += this.appendHtml(index, "odd");
+        } else {
+          row.innerHTML += this.appendHtml(index, "pair");
+        }
       } else {
-        table.innerHTML += this.appendHtml("odd");
+        if (this.color) {
+          row.innerHTML += this.appendHtml(index, "pair");
+        } else {
+          row.innerHTML += this.appendHtml(index, "odd");
+        }
       }
-    } else {
       this.color = !this.color;
-      if (this.showPair()) {
-        table.innerHTML += this.appendHtml("pair");
-      } else {
-        table.innerHTML += this.appendHtml("odd");
-      }
-      return this.showPair();
+    } else {
+      return console.log("Row não existe");
     }
   }
 
@@ -62,25 +63,32 @@ export default class Table {
       const table = document.getElementById("table");
       if (!table || !(table instanceof HTMLDivElement))
         throw new Error("Div tabela não foi encontrada!");
-      this.table = table;
-      this.createMatriz();
+      if (this.table === null) this.table = table;
       this.matriz.forEach((row, indexRow) => {
-        row.forEach((column) => {
-          this.checkPair(column, indexRow, table);
+        this.index++;
+        table.innerHTML += `<div data-rows=${String.fromCharCode(
+          65 + indexRow
+        )} class="rows"></div>`;
+        row.forEach((column, indexColumn) => {
+          this.checkPair(indexColumn, String.fromCharCode(65 + indexRow));
         });
-      })
-      console.log(this.getPosition(new Position(5, 5)))
+      });
+      this.updatePage(new Torre("Branca", 4, "c"));
     } catch (err) {
       if (err instanceof Error) {
         console.log(err.message);
       }
     }
   }
-  public getPosition ( peca : Position ) {
-    return this.matriz[peca.posInitial][peca.posFinal]
-  }
 
-  public setPosition (peca : Position, pecaType : Pecas) {
-    return this.matriz[peca.posInitial][peca.posFinal] = pecaType.sprite;
+  protected updatePage(peca: Pecas) {
+    this.matriz.forEach((row, indexRow) => {
+      row.forEach((column, indexColumn) => {
+        const row = document.querySelector(`[data-row="${indexRow}"]`);
+        if (column !== "") {
+          
+        }
+      });
+    });
   }
 }

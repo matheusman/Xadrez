@@ -1,17 +1,18 @@
 import { Pecas, Colors } from "./PecasIterface";
+import torre from '../images/rook-white.png';
 
+export default class Torre implements Pecas {
 
-class Torre implements Pecas {
-
-    position : number[];
     color: Colors;
     qteMoviment: number;
     sprite: string;
+    html : string;
 
-    constructor (color : Colors, posInitial : number, posFinal : number) {
-        this.position = [0, 0];
+    constructor (color : Colors, posInitial : number, posFinal : string) {
         this.color = color;
         this.qteMoviment = 0;
         this.sprite = "T";
-    }
+        this.html = `<img src=${torre} class="rook" />`
+    } 
+
 }
