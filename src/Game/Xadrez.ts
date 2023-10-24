@@ -10,7 +10,7 @@ export default class Xadrez extends Table {
   constructor(row: number, columns: number) {
     super(row, columns);
     this.matrizChess = new Matriz(this.matriz); // take methods that class
-    this.takePosition( new Torre("Branca", new Position("A", 1), this.matriz) );
+    this.takePosition( new Torre("Branca", new Position("B", 1)));
   }
 
   private takePositionHTML(peca: Pecas) {
@@ -24,6 +24,7 @@ export default class Xadrez extends Table {
         throw new Error("Row não foi encontrado!");
       if (row.children.length >= 1) row.innerHTML = "";
       row.innerHTML += peca.ToString();
+      console.log(this.matrizChess.getMatriz())
       return row;
     } catch (err) {
       if (err instanceof Error) {
@@ -34,9 +35,7 @@ export default class Xadrez extends Table {
 
   public takePosition(peca: Pecas) {
     Matriz.checkPosition(peca.pos);
-    let positionMatriz =
-      this.matriz[peca.pos.posInitial.charCodeAt(0) - 65][peca.pos.posFinal - 1];
-    positionMatriz = peca.sprite;
+    this.matrizChess.setMatriz(peca)
     this.takePositionHTML(peca);
   }
 }

@@ -7,5 +7,6 @@ export interface Pecas {
     color : Colors;
     qteMoviment : number;
     pos : Position;
+    possibility () : void;
     ToString () : string;
 }

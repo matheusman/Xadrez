@@ -1,3 +1,4 @@
+import { Pecas } from "../Pecas/PecasIterface";
 import Position from "./Position";
 
 export default class Matriz {
@@ -8,8 +9,16 @@ export default class Matriz {
         this.matriz = matriz;
     }
 
-    getMatriz (posInitial : string, posFinal : number) {
-        this.matriz[posInitial.charCodeAt(0) - 65][posFinal - 1]
+    getPositionMatriz (pos : Position) : string {
+        return this.matriz[pos.posInitial.charCodeAt(0) - 65][pos.posFinal - 1]
+    }
+
+    setMatriz (peca : Pecas) {
+        this.matriz[peca.pos.posInitial.charCodeAt(0) - 65][peca.pos.posFinal - 1] = peca.sprite;
+    }
+
+    getMatriz () {
+        return this.matriz;
     }
 
     public static checkPosition (pos : Position) {
