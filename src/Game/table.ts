@@ -3,14 +3,15 @@ import Torre from "../Pecas/Torre";
 
 export default class Table {
 
-  private row: number;
-  private columns: number;
+  protected row: number;
+  protected columns: number;
   protected index: number;
   protected matriz: string[][];
   protected color: boolean;
   public table: null | HTMLDivElement;
 
   public constructor(row: number, columns: number) {
+
     this.row = row;
     this.columns = columns;
 
@@ -22,6 +23,8 @@ export default class Table {
     this.createMatriz();
     this.showTable();
   }
+
+  
 
   private createMatriz() {
     for (let e = 0; e < this.row; e++) {

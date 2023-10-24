@@ -1,21 +1,28 @@
 import { Pecas } from "../Pecas/PecasIterface";
 import Torre from "../Pecas/Torre";
+import Matriz from "./Matriz";
 import Position from "./Position";
 import Table from "./table";
 
 export default class Xadrez extends Table {
+  matrizChess: Matriz;
 
   constructor(row: number, columns: number) {
     super(row, columns);
-    this.takePosition(new Position('A', 5), new Torre('Branca'));
+    this.matrizChess = new Matriz(this.matriz); // take methods that class
+    this.takePosition( new Torre("Branca", new Position("A", 1), this.matriz) );
   }
 
-  private takePositionHTML (pos : Position, peca : Pecas) {
-
+  private takePositionHTML(peca: Pecas) {
     try {
-      if (pos.posInitial.charCodeAt(0) < 65 || pos.posInitial.charCodeAt(0) > 65 + 7) throw new Error("Posição não existe");
-      const row = document.querySelector(`[data-rows="${pos.posInitial.toUpperCase()}"] [data-columns="${pos.posFinal}"]`);
-      if (!row) throw new Error("Row não foi encontrado!");
+      const row = document.querySelector(
+        `[data-rows="${peca.pos.posInitial.toUpperCase()}"] [data-columns="${
+          peca.pos.posFinal
+        }"]`
+      );
+      if (!row || !(row instanceof HTMLDivElement))
+        throw new Error("Row não foi encontrado!");
+      if (row.children.length >= 1) row.innerHTML = "";
       row.innerHTML += peca.ToString();
       return row;
     } catch (err) {
@@ -23,11 +30,13 @@ export default class Xadrez extends Table {
         console.log(err.message);
       }
     }
+  }
 
-  } 
-
-  private takePosition (pos : Position, peca : Pecas) {
-    this.matriz[pos.posInitial.charCodeAt(0) - 65][pos.posFinal - 1] = peca.sprite;
-    this.takePositionHTML(pos, peca);
+  public takePosition(peca: Pecas) {
+    Matriz.checkPosition(peca.pos);
+    let positionMatriz =
+      this.matriz[peca.pos.posInitial.charCodeAt(0) - 65][peca.pos.posFinal - 1];
+    positionMatriz = peca.sprite;
+    this.takePositionHTML(peca);
   }
 }
